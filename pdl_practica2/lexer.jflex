@@ -1,94 +1,33 @@
-package cup.example;
-import java_cup.runtime.ComplexSymbolFactory;
-import java_cup.runtime.ComplexSymbolFactory.Location;
-import java_cup.runtime.Symbol;
-import java.lang.*;
-import java.io.InputStreamReader;
+package lex.generado; // paquete en el que se genera el fichero java
+import lex.manual.SimbolosTerminales; //Simbolos terminales definidos
+import lex.manual.Symbol;
 
 %%
 
 %class Lexer
-%implements sym
+%implements SimbolosTerminales
 %public
 %unicode
+
 %line
 %column
-%cup
 %char
-%{
-	
 
-    public Lexer(ComplexSymbolFactory sf, java.io.InputStream is){
-		this(is);
-        symbolFactory = sf;
-    }
-	public Lexer(ComplexSymbolFactory sf, java.io.Reader reader){
-		this(reader);
-        symbolFactory = sf;
-    }
-    
-    private StringBuffer sb;
-    private ComplexSymbolFactory symbolFactory;
-    private int csline,cscolumn;
-
-    public Symbol symbol(String name, int code){
-		return symbolFactory.newSymbol(name, code,
-						new Location(yyline+1,yycolumn+1, yychar), // -yylength()
-						new Location(yyline+1,yycolumn+yylength(), yychar+yylength())
-				);
-    }
-    public Symbol symbol(String name, int code, String lexem){
-	return symbolFactory.newSymbol(name, code, 
-						new Location(yyline+1, yycolumn +1, yychar), 
-						new Location(yyline+1,yycolumn+yylength(), yychar+yylength()), lexem);
-    }
-    
-    protected void emit_warning(String message){
-    	System.out.println("scanner warning: " + message + " at : 2 "+ 
-    			(yyline+1) + " " + (yycolumn+1) + " " + yychar);
-    }
-    
-    protected void emit_error(String message){
-    	System.out.println("scanner error: " + message + " at : 2" + 
-    			(yyline+1) + " " + (yycolumn+1) + " " + yychar);
-    }
-%}
-
-Newline    = \r | \n | \r\n
-Whitespace = [ \t\f] | {Newline}
-Number     = [0-9]+
-
-/* comments */
-Comment = {TraditionalComment} | {EndOfLineComment}
-TraditionalComment = "/*" {CommentContent} \*+ "/"
-EndOfLineComment = "//" [^\r\n]* {Newline}
-CommentContent = ( [^*] | \*+[^*/] )*
-
-ident = ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
-
+%function next_token // Nombre del método que escanea la entrada y
+ // devuelve el siguiente token
+%type Symbol // Tipo de retorno para la función de scan
 
 %eofval{
-    return symbolFactory.newSymbol("EOF",sym.EOF);
+ return new Symbol(EOF);
 %eofval}
 
-%state CODESEG
+/* Macros para expresiones regulares (para simplificar reglas) */
 
-%%  
+%%
 
-<YYINITIAL> {
-
-  {Whitespace} {                              }
-  ";"          { return symbolFactory.newSymbol("SEMI", SEMI); }
-  "+"          { return symbolFactory.newSymbol("PLUS", PLUS); }
-  "-"          { return symbolFactory.newSymbol("MINUS", MINUS); }
-  "*"          { return symbolFactory.newSymbol("TIMES", TIMES); }
-  "n"          { return symbolFactory.newSymbol("UMINUS", UMINUS); }
-  "("          { return symbolFactory.newSymbol("LPAREN", LPAREN); }
-  ")"          { return symbolFactory.newSymbol("RPAREN", RPAREN); }
-  {Number}     { return symbolFactory.newSymbol("NUMBER", NUMBER, Integer.parseInt(yytext())); }
-}
-
-
+/* Reglas para detectar los tokens y acciones asociadas */
 
 // error fallback
-.|\n          { emit_warning("Unrecognized character '" +yytext()+"' -- ignored"); }
+.|\n {System.err.println("warning: Unrecognized character '"
+ + yytext()+"' -- ignored" + " at : "+ (yyline+1) + " " +
+ (yycolumn+1) + " " + yychar); }
