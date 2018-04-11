@@ -9,13 +9,13 @@ import java.util.ArrayList;
 public class Driver {
 	public static void main(String args[]) throws IOException{
 		// Entrada de datos: teclado por defecto, fichero si hay argumento   InputStream dataStream = System.in; 
-		 
+		InputStream dataStream = System.in; 
 		  if (args.length >= 1) {    
 			  System.out.println("Leyendo entrada de fichero... ");    
-			  dataStream = new FileInputStream(args[0]);   } 
+			  dataStream = new FileInputStream(args[0]);   
+			  } 
 		  else {    
-			  System.out.println("Inserta expresiones a reconocer,”+                                        "
-			  		+ "“ pulsando <ENTER> entre ellas");   
+			  System.out.println("Inserta expresiones a reconocer, pulsando <ENTER> entre ellas");   
 			  }   
 		  // Creamos el objeto scanner    
 		 

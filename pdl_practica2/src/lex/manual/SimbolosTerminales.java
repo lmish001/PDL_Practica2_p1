@@ -1,6 +1,6 @@
 package lex.manual;
 
-public class SimbolosTerminales {
+public interface SimbolosTerminales {
 	 /* terminals */
 	 public static final int EOF = 0;
 	 public static final int error = 1;
