@@ -39,7 +39,8 @@ public class Driver {
 				 System.out.println("Ups... algo ha ido mal");     
 				 x.printStackTrace();    }   } 
 		 
-		 symbols.trimToSize();   System.out.println("\n\n -- Bye-bye -- "); 
+		 symbols.trimToSize();  
+		 System.out.println("\n\n -- Bye-bye -- "); 
 		 
 	}
 	}
