@@ -55,8 +55,8 @@ Palabra = {InputCharacter}*
 /* Reglas para detectar los tokens y acciones asociadas */
 <YYINITIAL> {
 	  {Whitespace} {}
-	  {Dec_Number} { return new Symbol(dec_number, "DEC_NUMBER"); }
-	  {Hex_Number} { return new Symbol(hex_number, "HEX_NUMBER"); }
+	  {Dec_Number} { return new Symbol (dec_number, "DEC_NUMBER"); }
+	  {Hex_Number} { return new Symbol (hex_number, "HEX_NUMBER"); }
 	  {Email}	   { return new Symbol (email, "EMAIL"); }
 	  {DNI}        { return new Symbol (dni, "DNI"); }
 	  {Matricula}  { return new Symbol (matricula, "MATRICULA"); }
