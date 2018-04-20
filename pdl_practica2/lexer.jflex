@@ -22,7 +22,7 @@ LineTerminator = \r|\n|\r\n
 
 
 
-InputCharacter = [^\r\n]
+InputCharacter = [^\r\n \t\f]
 InputCharacterEmail = [a-zA-Z0-9.]
 
 /*Numero entero decimal*/
