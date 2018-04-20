@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Driver {
 	public static void main(String args[]) throws IOException{
 		// Entrada de datos: por fichero 
-		InputStream dataStream = new FileInputStream("input.txt");
+		InputStream dataStream = new FileInputStream("grupo_Escabia_Mishkinitse_pruebaOK1.txt");
 		
 		  // Creamos el objeto scanner    
 		 Lexer scanner = new Lexer(dataStream);   
@@ -33,7 +33,7 @@ public class Driver {
 				 x.printStackTrace();    }   } 
 		 
 		 symbols.trimToSize();  
-		 System.out.println("\n\n -- Bye-bye -- "); 
+		 //System.out.println("\n\n -- Bye-bye -- "); 
 		 
 	}
 }

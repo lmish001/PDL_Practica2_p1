@@ -23,6 +23,7 @@ LineTerminator = \r|\n|\r\n
 
 
 InputCharacter = [^\r\n]
+InputCharacterEmail = [a-zA-Z0-9.]
 
 /*Numero entero decimal*/
 NumLiteral = [0-9]*
@@ -33,7 +34,7 @@ HexLiteral = [0-9a-fA-F]*
 Hex_Number = 0 [xX] [1-9a-fA-F] {HexLiteral}
 
 /*Dirección email*/
-Email = {Palabra}"@"{Palabra}".com"
+Email = {PalabraEmail}"@"{PalabraEmail}".com"
 
 /*DNI España*/
 DNI = [0-9]{8}[a-zA-Z]
@@ -43,6 +44,7 @@ Matricula = [0-9]{8}[a-zA-Z]{3}
 
 /* Palabra*/
 Palabra = {InputCharacter}*
+PalabraEmail = {InputCharacterEmail}{InputCharacterEmail}*
 
 %eofval{
  return new Symbol(EOF);
@@ -55,12 +57,12 @@ Palabra = {InputCharacter}*
 /* Reglas para detectar los tokens y acciones asociadas */
 <YYINITIAL> {
 	  {Whitespace} {}
-	  {Dec_Number} { return new Symbol (dec_number, "DEC_NUMBER"); }
-	  {Hex_Number} { return new Symbol (hex_number, "HEX_NUMBER"); }
-	  {Email}	   { return new Symbol (email, "EMAIL"); }
-	  {DNI}        { return new Symbol (dni, "DNI"); }
-	  {Matricula}  { return new Symbol (matricula, "MATRICULA"); }
-	  {Palabra}    { return new Symbol (palabra, "PALABRA"); }
+	  {Dec_Number} { return new Symbol (dec_number, Float.parseFloat(yytext())); }
+	  {Hex_Number} { return new Symbol (hex_number, Integer.parseInt(yytext().substring(2, yytext().length()), 16)); }
+	  {Email}	   { return new Symbol (email, yytext()); }
+	  {DNI}        { return new Symbol (dni, yytext()); }
+	  {Matricula}  { return new Symbol (matricula, yytext()); }
+	  {Palabra}    { return new Symbol (palabra, yytext()); }
 }
 
 
